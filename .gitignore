@@ -1,0 +1,7 @@
+db.sqlite3
+migrations
+env
+.vscode/
+/static/
+.DS_Store
+__pycache__
