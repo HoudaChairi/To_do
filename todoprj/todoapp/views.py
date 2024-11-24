@@ -27,9 +27,21 @@ def register(request):
         
         new_user = User.objects.create_user(username=username, email=email, password=password)
         new_user.save()
-        
+        messages.success(request, 'User successfully created, login now')
+        return redirect('login')
     return render(request, 'todoapp/register.html', {})
 
 
-def login(request):
+def loginPage(request):
+    if request.method == 'POST':
+        username = request.POST.get('uname')
+        password = request.POST.get('pass')
+        
+        validate_user = authenticate(username=username, password=password) 
+        if validate_user is not None:
+            login(request, validate_user)
+            return redirect('home-page')
+        else:
+            messages.error(request, 'Error, wrong user details or user does not exist')
+            return redirect('login')
     return render(request, 'todoapp/login.html', {})
