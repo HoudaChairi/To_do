@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-
+from .models import todo
 
 def home(request):
+    if request.method == 'POST':
+        task = request.POST.get('task')
+        new_todo = todo(user=request.user, todo_name=task)
+        new_todo.save()
     return render(request, 'todoapp/todo.html', {})
 
 
