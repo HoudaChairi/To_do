@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import todo
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def home(request):
     if request.method == 'POST':
         task = request.POST.get('task')
@@ -40,6 +42,9 @@ def register(request):
         return redirect('login')
     return render(request, 'todoapp/register.html', {})
 
+def logoutView(request):
+    logout(request)
+    return redirect('login')
 
 def loginPage(request):
     if request.method == 'POST':
@@ -55,11 +60,13 @@ def loginPage(request):
             return redirect('login')
     return render(request, 'todoapp/login.html', {})
 
+@login_required
 def DeleteTask(request, name):
     get_todo = todo.objects.get(user=request.user, todo_name=name)
     get_todo.delete()
     return redirect('home-page')
 
+@login_required
 def Update(request, name):
     get_todo = todo.objects.get(user=request.user, todo_name=name)
     get_todo.status = True
