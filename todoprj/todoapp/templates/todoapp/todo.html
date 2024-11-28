@@ -46,8 +46,8 @@
                       <td>In progress</td>
                     {% endif %}
                     <td>
-                      <button type="submit" class="btn btn-danger">Delete</button></a>
-                      <button type="submit" class="btn btn-success ms-1">Finished</button></a>
+                      <a href="{% url 'delete' i.todo_name %}"><button type="submit" class="btn btn-danger">Delete</button></a>
+                      <a href="{% url 'update' i.todo_name %}"><button type="submit" class="btn btn-success ms-1">Finished</button></a>
                     </td>
                   </tr>
                   {% endfor %}

@@ -54,3 +54,15 @@ def loginPage(request):
             messages.error(request, 'Error, wrong user details or user does not exist')
             return redirect('login')
     return render(request, 'todoapp/login.html', {})
+
+def DeleteTask(request, name):
+    get_todo = todo.objects.get(user=request.user, todo_name=name)
+    get_todo.delete()
+    return redirect('home-page')
+
+def Update(request, name):
+    get_todo = todo.objects.get(user=request.user, todo_name=name)
+    get_todo.status = True
+    get_todo.save()
+    return redirect('home-page')
+
