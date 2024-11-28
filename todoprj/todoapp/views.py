@@ -9,9 +9,14 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     if request.method == 'POST':
         task = request.POST.get('task')
-        new_todo = todo(user=request.user, todo_name=task)
-        new_todo.save()
         
+        if not todo.objects.filter(user=request.user, todo_name=task).exists():
+            new_todo = todo(user=request.user, todo_name=task)
+            new_todo.save()
+        else:
+            messages.error(request, 'Task with this name already exists.')
+        return redirect('home-page')
+
     all_todos = todo.objects.filter(user=request.user)
     context = {
         'todos': all_todos
@@ -20,7 +25,8 @@ def home(request):
 
 
 def register(request):
-
+    if request.user.is_authenticated:
+        return redirect('home-page')
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -62,7 +68,7 @@ def loginPage(request):
 
 @login_required
 def DeleteTask(request, name):
-    get_todo = todo.objects.get(user=request.user, todo_name=name)
+    get_todo = todo.objects.filter(user=request.user, todo_name=name)
     get_todo.delete()
     return redirect('home-page')
 
