@@ -37,10 +37,12 @@ A simple Todo application built using Django, allowing users to create, manage, 
       ```
 4. **Install the required packages:**
 ```bash
+cd todoprj
 pip install -r requirements.txt
 ```
 5. **Run database migrations:**
 ```bash
+python manage.py makemigrations todoapp
 python manage.py migrate
 ```
 6. **Start the development server:**
