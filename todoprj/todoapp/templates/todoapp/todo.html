@@ -28,22 +28,27 @@
                           <table class="table table-striped table-bordered table-hover mb-4">
                               <thead>
                                   <tr>
-                                      <th scope="col" class="text-center">Todo Item</th>
-                                      <th scope="col" class="text-center">Status</th>
-                                      <th scope="col" class="text-center">Actions</th>
+                                      <th scope="col">Todo Item</th> <!-- Not centered -->
+                                      <th scope="col" class="text-center">Status</th> <!-- Centered -->
+                                      <th scope="col" class="text-center">Actions</th> <!-- Centered -->
                                   </tr>
                               </thead>
                               <tbody>
                                   {% for i in todos %}
-                                  <tr class="text-center">
-                                      <td>{{i.todo_name}}</td>
-                                      <td>
+                                  <tr>
+                                      <!-- Left-aligned content for Todo Item -->
+                                      <td class="text-start">{{i.todo_name}}</td> <!-- Ensure left-aligned -->
+
+                                      <!-- Centered content for Status -->
+                                      <td class="text-center">
                                           {% if i.status == True %}
                                               <span class="badge bg-success">Completed</span>
                                           {% else %}
                                               <span class="badge bg-warning">In Progress</span>
                                           {% endif %}
                                       </td>
+
+                                      <!-- Centered content for Actions -->
                                       <td class="d-flex justify-content-center align-items-center">
                                           <!-- Delete Button -->
                                           <a href="{% url 'delete' i.todo_name %}">
